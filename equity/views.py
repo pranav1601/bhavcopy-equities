@@ -10,12 +10,25 @@ import zipfile
 import requests
 from pathlib import Path
 from datetime import datetime, timedelta
+import redis
 
 # Create your views here.
 
 def index(request):
     df=bhavcopy()
-    return render(request,'index.html',context={'text':str(df.loc[[0,0]])})
+    r=redis.StrictRedis(host="localhost", port=6379, charset="utf-8", decode_responses=True)
+    with r.pipeline() as pipe:
+        for index,row in df.iterrows():
+            equity_name=row['SC_NAME']
+            equity_desc={"code":row['SC_CODE'],"open":row['OPEN'],"high":row['HIGH'],"close":row['CLOSE'],"low":row['LOW']}
+            pipe.hmset(equity_name.encode('utf-8'),equity_desc)
+        pipe.execute()
+    r.bgsave()
+    val=''
+    equity_dict={}
+    for key in sorted(r.keys("*")):
+        equity_dict[key]=r.hgetall(key)
+    return render(request,'index.html',context={'text':equity_dict})
 
 
 
@@ -30,6 +43,6 @@ def bhavcopy():
         file.close()
     with zipfile.ZipFile(target_zip, "r") as compressed_file:
         compressed_file.extractall(Path(target_zip).parent)
+    os.remove(target_zip)
     df=pd.read_csv(os.path.join(download_path,'EQ300421.CSV'))
-    print(df.head())
     return df
