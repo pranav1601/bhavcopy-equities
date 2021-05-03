@@ -11,16 +11,25 @@
             {% csrf_token %}  
             {{ form.as_p }}  
             <button type="submit" class="save btn btn-default">Search</button>  
-    </form>  
-        <div>
-            <div>
-                <div>
-                    <h3></h3>
-                    {% for equity in text%}
-                    <li>{{equity}}</li>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
+        </form>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Code</th>
+                <th>Open</th>
+                <th>Close</th>
+                <th>High</th>
+                <th>Low</th>
+            </tr>
+            {% for key,value in text.items%}
+            <tr>
+                <td>{{key}}</td>
+                {% for key2,value2 in value.items%}
+                    <td>{{value2}}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}    
+        </table>
+        
     </body>
 </html>

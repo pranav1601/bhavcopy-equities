@@ -21,5 +21,4 @@ def bhavcopy():
     with zipfile.ZipFile(target_zip, "r") as compressed_file:
         compressed_file.extractall(Path(target_zip).parent)
     df=pd.read_csv(os.path.join(download_path,'EQ300421.CSV'))
-    print(df.head())
     return df

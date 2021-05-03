@@ -21,7 +21,7 @@ def index(request):
     with r.pipeline() as pipe:
         for index,row in df.iterrows():
             equity_name=row['SC_NAME']
-            equity_desc={"code":row['SC_CODE'],"open":row['OPEN'],"high":row['HIGH'],"close":row['CLOSE'],"low":row['LOW']}
+            equity_desc={"code":str(row['SC_CODE']),"open":str(row['OPEN']),"close":str(row['CLOSE']),"high":str(row['HIGH']),"low":str(row['LOW'])}
             pipe.hmset(equity_name.encode('utf-8'),equity_desc)
         pipe.execute()
     r.bgsave()
@@ -42,6 +42,9 @@ def index(request):
     
     for key in sorted(r.keys("*")):
         equity_dict[key]=r.hgetall(key)
+    for key,value in equity_dict.items():
+        for key2,value2 in value.items():
+            print(value2)
     return render(request,'index.html',context={'text':equity_dict,'form':search})
 
 
