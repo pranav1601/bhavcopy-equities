@@ -30,20 +30,23 @@ def index(request):
     val=''
     equity_dict={}
     search=searchForm()
+    download_path = os.path.join(str(Path(__file__).resolve().parent), "downloads")
+    # Define text file name
+    filename = 'EQ300421.CSV'
+    # Define the full file path
+    filepath = os.path.join(download_path,'equities.CSV')
     if request.method == 'POST':  
         search_value = request.POST['search_equity']
         val=search_value.strip().upper()
+        download_path = os.path.join(str(Path(__file__).resolve().parent), "downloads")
+        # Define text file name
+        filename = 'EQ300421.CSV'
+        # Define the full file path
+        filepath = os.path.join(download_path,'equities.CSV')
         if(len(val)>0):
             filtered_dict={}
-            download_path = os.path.join(str(Path(__file__).resolve().parent), "downloads")
-            # Define text file name
-            filename = 'EQ300421.CSV'
-            # Define the full file path
-            filepath = os.path.join(download_path,'equities.CSV')
             if os.path.exists(filepath):
                 os.remove(filepath)
-            else:
-                print("The file does not exist")
             with open(filepath, 'a') as f:
                 f.write("{},{},{},{},{},{}\n".format("Name", "Code","Open","Close","High","Low"))
                 for key in sorted(r.keys()):
@@ -53,12 +56,14 @@ def index(request):
             
             return render(request,'index.html',context={'text':filtered_dict,'form':search})
           
+    if os.path.exists(filepath):
+        os.remove(filepath)
+    with open(filepath, 'a') as f:
+        f.write("{},{},{},{},{},{}\n".format("Name", "Code","Open","Close","High","Low"))
+        for key in sorted(r.keys("*")):
+            equity_dict[key]=r.hgetall(key)
+            f.write("{},{},{},{},{},{}\n".format(key,equity_dict[key]["code"],equity_dict[key]["open"],equity_dict[key]["close"],equity_dict[key]["high"],equity_dict[key]["low"] ))
     
-    for key in sorted(r.keys("*")):
-        equity_dict[key]=r.hgetall(key)
-    for key,value in equity_dict.items():
-        for key2,value2 in value.items():
-            print(value2)
     return render(request,'index.html',context={'text':equity_dict,'form':search})
 
 def download_file(request):
