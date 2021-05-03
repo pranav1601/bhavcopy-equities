@@ -32,10 +32,12 @@ def index(request):
         search_value = request.POST['search_equity']
         val=search_value.strip().upper()
         if(len(val)>0):
-            for key in sorted(r.keys("*"+val+"*")):
-                equity_dict[key]=r.hgetall(key)
-                print(equity_dict)
-                return render(request,'index.html',context={'text':equity_dict,'form':search})
+            filtered_dict={}
+            for key in sorted(r.keys()):
+                if val.lower() in key or val.upper() in key:
+                    
+                    filtered_dict[key]=r.hgetall(key)
+            return render(request,'index.html',context={'text':filtered_dict,'form':search})
           
     
     for key in sorted(r.keys("*")):
