@@ -7,10 +7,11 @@
         <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
     </head>
     <body>
-        <form action="">
-            <input type="text">
-            <button>search</button>
-        </form>
+        <form method="POST" class="post-form" enctype="multipart/form-data">  
+            {% csrf_token %}  
+            {{ form.as_p }}  
+            <button type="submit" class="save btn btn-default">Search</button>  
+    </form>  
         <div>
             <div>
                 <div>

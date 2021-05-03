@@ -11,6 +11,7 @@ import requests
 from pathlib import Path
 from datetime import datetime, timedelta
 import redis
+from .forms import searchForm
 
 # Create your views here.
 
@@ -26,9 +27,20 @@ def index(request):
     r.bgsave()
     val=''
     equity_dict={}
+    search=searchForm()
+    if request.method == 'POST':  
+        search_value = request.POST['search_equity']
+        val=search_value.strip().upper()
+        if(len(val)>0):
+            for key in sorted(r.keys("*"+val+"*")):
+                equity_dict[key]=r.hgetall(key)
+                print(equity_dict)
+                return render(request,'index.html',context={'text':equity_dict,'form':search})
+          
+    
     for key in sorted(r.keys("*")):
         equity_dict[key]=r.hgetall(key)
-    return render(request,'index.html',context={'text':equity_dict})
+    return render(request,'index.html',context={'text':equity_dict,'form':search})
 
 
 
