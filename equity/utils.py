@@ -1,5 +1,3 @@
-from django.shortcuts import render
-import requests
 import csv, zipfile, os
 import requests
 from datetime import datetime, timedelta
@@ -10,14 +8,6 @@ import zipfile
 import requests
 from pathlib import Path
 from datetime import datetime, timedelta
-
-# Create your views here.
-
-def index(request):
-    df=bhavcopy()
-    return render(request,'index.html',context={'text':str(df.loc[[0,0]])})
-
-
 
 def bhavcopy():
     download_path = os.path.join(str(Path(__file__).resolve().parent), "downloads")
