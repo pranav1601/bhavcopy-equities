@@ -12,6 +12,8 @@ from pathlib import Path
 from datetime import datetime, timedelta
 import redis
 from .forms import searchForm
+from django.http.response import HttpResponse
+import mimetypes
 
 # Create your views here.
 
@@ -33,10 +35,22 @@ def index(request):
         val=search_value.strip().upper()
         if(len(val)>0):
             filtered_dict={}
-            for key in sorted(r.keys()):
-                if val.lower() in key or val.upper() in key:
-                    
-                    filtered_dict[key]=r.hgetall(key)
+            download_path = os.path.join(str(Path(__file__).resolve().parent), "downloads")
+            # Define text file name
+            filename = 'EQ300421.CSV'
+            # Define the full file path
+            filepath = os.path.join(download_path,'equities.CSV')
+            if os.path.exists(filepath):
+                os.remove(filepath)
+            else:
+                print("The file does not exist")
+            with open(filepath, 'a') as f:
+                f.write("{},{},{},{},{},{}\n".format("Name", "Code","Open","Close","High","Low"))
+                for key in sorted(r.keys()):
+                    if val.lower() in key or val.upper() in key:
+                        filtered_dict[key]=r.hgetall(key)
+                        f.write("{},{},{},{},{},{}\n".format(key,filtered_dict[key]["code"],filtered_dict[key]["open"],filtered_dict[key]["close"],filtered_dict[key]["high"],filtered_dict[key]["low"] ))
+            
             return render(request,'index.html',context={'text':filtered_dict,'form':search})
           
     
@@ -47,7 +61,24 @@ def index(request):
             print(value2)
     return render(request,'index.html',context={'text':equity_dict,'form':search})
 
-
+def download_file(request):
+    # Define Django project base directory
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    download_path = os.path.join(str(Path(__file__).resolve().parent), "downloads")
+    # Define text file name
+    filename = 'EQ300421.CSV'
+    # Define the full file path
+    filepath = os.path.join(download_path,'equities.CSV')
+    # Open the file for reading content
+    path = open(filepath, 'r')
+    # Set the mime type
+    mime_type, _ = mimetypes.guess_type(filepath)
+    # Set the return value of the HttpResponse
+    response = HttpResponse(path, content_type=mime_type)
+    # Set the HTTP header for sending to browser
+    response['Content-Disposition'] = "attachment; filename=%s" % filename
+    # Return the response value
+    return response
 
 def bhavcopy():
     download_path = os.path.join(str(Path(__file__).resolve().parent), "downloads")
