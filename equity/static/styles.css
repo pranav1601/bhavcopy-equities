@@ -6,12 +6,20 @@ body {
     margin-bottom: 25px;
 }
 
+h1{
+    margin: 20px;
+}
+
+p{
+    margin: 20px;
+}
+
 .fix{
     width: 100%;
 }
 
 .header {
-    padding: 60px;
+    padding: 5px;
     margin-top: 0px;
     text-align: center;
     background-color: #1abc9c;
@@ -20,9 +28,6 @@ body {
     font-size: 30px;
     margin-bottom: 5px;
   }
-
-.search-form{
-}
 
 .wrapper {
     position: relative;
