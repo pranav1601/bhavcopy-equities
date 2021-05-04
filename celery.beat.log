@@ -1,0 +1,12 @@
+[2021-05-03 20:48:05,434: INFO/MainProcess] beat: Starting...
+[2021-05-03 20:48:05,437: WARNING/MainProcess] Reset: Timezone changed from 'Asia/Calcutta' to 'Asia/Kolkata'
+[2021-05-03 20:48:15,462: INFO/MainProcess] Scheduler: Sending due task print-message-ten-seconds (print_msg_main)
+[2021-05-03 20:48:25,438: INFO/MainProcess] Scheduler: Sending due task print-message-ten-seconds (print_msg_main)
+[2021-05-03 20:48:25,610: INFO/MainProcess] Scheduler: Sending due task print-time-twenty-seconds (print_time)
+[2021-05-03 20:48:35,438: INFO/MainProcess] Scheduler: Sending due task print-message-ten-seconds (print_msg_main)
+[2021-05-03 20:48:45,438: INFO/MainProcess] Scheduler: Sending due task print-message-ten-seconds (print_msg_main)
+[2021-05-03 20:48:45,610: INFO/MainProcess] Scheduler: Sending due task calculate-forty-seconds (get_calculation)
+[2021-05-03 20:48:45,617: INFO/MainProcess] Scheduler: Sending due task print-time-twenty-seconds (print_time)
+[2021-05-03 20:48:55,438: INFO/MainProcess] Scheduler: Sending due task print-message-ten-seconds (print_msg_main)
+[2021-05-03 20:49:05,438: INFO/MainProcess] Scheduler: Sending due task print-message-ten-seconds (print_msg_main)
+[2021-05-03 20:49:05,617: INFO/MainProcess] Scheduler: Sending due task print-time-twenty-seconds (print_time)

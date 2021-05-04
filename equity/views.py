@@ -50,9 +50,10 @@ def index(request):
             with open(filepath, 'a') as f:
                 f.write("{},{},{},{},{},{}\n".format("Name", "Code","Open","Close","High","Low"))
                 for key in sorted(r.keys()):
-                    if val.lower() in key or val.upper() in key:
-                        filtered_dict[key]=r.hgetall(key)
-                        f.write("{},{},{},{},{},{}\n".format(key,filtered_dict[key]["code"],filtered_dict[key]["open"],filtered_dict[key]["close"],filtered_dict[key]["high"],filtered_dict[key]["low"] ))
+                    if 'celery' not in key:
+                        if val.lower() in key or val.upper() in key:
+                            filtered_dict[key]=r.hgetall(key)
+                            f.write("{},{},{},{},{},{}\n".format(key,filtered_dict[key]["code"],filtered_dict[key]["open"],filtered_dict[key]["close"],filtered_dict[key]["high"],filtered_dict[key]["low"] ))
             
             return render(request,'index.html',context={'text':filtered_dict,'form':search})
           
@@ -61,8 +62,9 @@ def index(request):
     with open(filepath, 'a') as f:
         f.write("{},{},{},{},{},{}\n".format("Name", "Code","Open","Close","High","Low"))
         for key in sorted(r.keys("*")):
-            equity_dict[key]=r.hgetall(key)
-            f.write("{},{},{},{},{},{}\n".format(key,equity_dict[key]["code"],equity_dict[key]["open"],equity_dict[key]["close"],equity_dict[key]["high"],equity_dict[key]["low"] ))
+            if 'celery' not in key:
+                equity_dict[key]=r.hgetall(key)
+                f.write("{},{},{},{},{},{}\n".format(key,equity_dict[key]["code"],equity_dict[key]["open"],equity_dict[key]["close"],equity_dict[key]["high"],equity_dict[key]["low"] ))
     
     return render(request,'index.html',context={'text':equity_dict,'form':search})
 
@@ -90,6 +92,7 @@ def bhavcopy():
     target_zip = download_path+'/'+ 'hello'+'.zip'
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36'}
     url='http://www.bseindia.com/download/BhavCopy/Equity/EQ300421_CSV.ZIP'
+    # url='https://www.bseindia.com/download/BhavCopy/Equity/EQ030521_CSV.ZIP'
     response = requests.get(url,headers=headers, timeout=5)
     with open(target_zip, "wb") as file:
         file.write(response.content)
