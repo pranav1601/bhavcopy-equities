@@ -1,8 +1,9 @@
 body {
     height: 100%;
     overflow: auto;
-    display: flexbox;
     margin: 0px;
+    padding-bottom: 50px;
+    margin-bottom: 25px;
 }
 
 .fix{
@@ -89,7 +90,6 @@ table, td, th {
     border: 2px solid #1abc9c;
     margin: 10px;
     border-radius: 5px;
-    height: 40px;
     width: 200px;
     align-self: center;
     padding: 2px 23px 2px 30px;
