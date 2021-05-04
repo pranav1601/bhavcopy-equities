@@ -27,7 +27,7 @@ app.conf.beat_schedule = {
     #Scheduler Name
     'download_copy': {
         'task': 'bhavcopy_csv',
-        'schedule': crontab(minute=24,hour=0,day_of_week='1,2,3,4,5'),
+        'schedule': crontab(minute=0,hour=18,day_of_week='1,2,3,4,5'),
     },
 }
 

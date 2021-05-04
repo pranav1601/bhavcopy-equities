@@ -42,7 +42,7 @@ def index(request):
         # Define text file name
         filename = 'EQ300421.CSV'
         # Define the full file path
-        filepath = os.path.join(download_path,'equities.CSV')
+        filepath = os.path.join(download_path,'equities.csv')
         if(len(val)>0):
             filtered_dict={}
             if os.path.exists(filepath):
