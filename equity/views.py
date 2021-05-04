@@ -14,6 +14,7 @@ import redis
 from .forms import searchForm
 from django.http.response import HttpResponse
 import mimetypes
+import glob
 
 # Create your views here.
 
@@ -34,7 +35,7 @@ def index(request):
     # Define text file name
     filename = 'EQ300421.CSV'
     # Define the full file path
-    filepath = os.path.join(download_path,'equities.CSV')
+    filepath = os.path.join(download_path,'equities.csv')
     if request.method == 'POST':  
         search_value = request.POST['search_equity']
         val=search_value.strip().upper()
@@ -73,9 +74,9 @@ def download_file(request):
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     download_path = os.path.join(str(Path(__file__).resolve().parent), "downloads")
     # Define text file name
-    filename = 'EQ300421.CSV'
+    filename = 'equities.csv'
     # Define the full file path
-    filepath = os.path.join(download_path,'equities.CSV')
+    filepath = os.path.join(download_path,'equities.csv')
     # Open the file for reading content
     path = open(filepath, 'r')
     # Set the mime type
@@ -89,16 +90,19 @@ def download_file(request):
 
 def bhavcopy():
     download_path = os.path.join(str(Path(__file__).resolve().parent), "downloads")
-    target_zip = download_path+'/'+ 'hello'+'.zip'
-    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36'}
-    url='http://www.bseindia.com/download/BhavCopy/Equity/EQ300421_CSV.ZIP'
-    # url='https://www.bseindia.com/download/BhavCopy/Equity/EQ030521_CSV.ZIP'
-    response = requests.get(url,headers=headers, timeout=5)
-    with open(target_zip, "wb") as file:
-        file.write(response.content)
-        file.close()
-    with zipfile.ZipFile(target_zip, "r") as compressed_file:
-        compressed_file.extractall(Path(target_zip).parent)
-    os.remove(target_zip)
-    df=pd.read_csv(os.path.join(download_path,'EQ300421.CSV'))
+    # target_zip = download_path+'/'+ 'hello'+'.zip'
+    # headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36'}
+    # url='http://www.bseindia.com/download/BhavCopy/Equity/EQ300421_CSV.ZIP'
+    # # url='https://www.bseindia.com/download/BhavCopy/Equity/EQ030521_CSV.ZIP'
+    # response = requests.get(url,headers=headers, timeout=5)
+    # with open(target_zip, "wb") as file:
+    #     file.write(response.content)
+    #     file.close()
+    # with zipfile.ZipFile(target_zip, "r") as compressed_file:
+    #     compressed_file.extractall(Path(target_zip).parent)
+    # os.remove(target_zip)
+    curr_bhavcopy=''
+    for file_name in glob.iglob(download_path+'/*.CSV', recursive=True):
+        curr_bhavcopy=file_name
+    df=pd.read_csv(os.path.join(download_path,curr_bhavcopy))
     return df

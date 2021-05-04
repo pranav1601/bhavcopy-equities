@@ -1,3 +1,102 @@
-h3{
-    color: blue;
+body {
+    height: 100%;
+    overflow: auto;
+    display: flexbox;
+    margin: 0px;
 }
+
+.fix{
+    width: 100%;
+}
+
+.header {
+    padding: 60px;
+    margin-top: 0px;
+    text-align: center;
+    background-color: #1abc9c;
+    overflow-y: hidden;
+    color: white;
+    font-size: 30px;
+    margin-bottom: 5px;
+  }
+
+.search-form{
+}
+
+.wrapper {
+    position: relative;
+    display: flex;
+    min-width: 100px;
+    justify-content: space-around;
+    flex-direction: column;
+  }
+
+  .search:hover, .search:focus {
+    border: 1.5px solid #009688;
+    background-color: white;
+  }
+.search {
+    border: 2px solid #1abc9c;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    height: 40px;
+    width: 60%;
+    align-self: center;
+    padding: 2px 23px 2px 30px;
+    outline: 0;
+    font-size: large;
+    background-color: #f5f5f5;
+}
+
+.button{
+    border: 2px solid #1abc9c;
+    margin: 10px;
+    border-radius: 5px;
+    height: 40px;
+    width: 200px;
+    align-self: center;
+    padding: 2px 23px 2px 30px;
+    outline: 0;
+    font-size: large;
+    background-color: #f5f5f5;
+    text-align: center;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #1abc9c; /* Green */
+    color: white;
+  }
+
+.buttons-wrapper{
+    position: relative;
+    display: flex;
+    min-width: 100px;
+    justify-content: center;
+}
+
+table, td, th {  
+    border: 1px solid #1abc9c;
+    text-align: left;
+  }
+  
+  table {
+    border-collapse: collapse;
+    width: 60%;
+    justify-content: center;
+    border: 2px solid #1abc9c;
+    margin: 10px;
+    border-radius: 5px;
+    height: 40px;
+    width: 200px;
+    align-self: center;
+    padding: 2px 23px 2px 30px;
+    outline: 0;
+    font-size: large;
+  }
+  
+  th, td {
+    padding: 15px;
+  }
