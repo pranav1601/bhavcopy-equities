@@ -44,8 +44,8 @@ def text_util():
     curr_time=datetime.now()
     today=datetime.today().weekday()
     if(today==6 or today==5):
-        return("You are looking at Friday's data")
+        return("You are looking at Friday's data.")
     if(curr_time.hour<18):
-        return('If you want to view the Equity information for today, tune in after 6 pm')
+        return('If you want to view the Equity information for today, tune in after 6 pm.')
     return('')
     
