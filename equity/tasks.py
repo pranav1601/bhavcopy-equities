@@ -6,6 +6,7 @@ import requests
 import zipfile
 from pathlib import Path
 from datetime import datetime,date
+from .utils import redis_save
 
 
 
@@ -30,3 +31,4 @@ def download_bhavcopy():
         compressed_file.extractall(Path(target_zip).parent)
     if os.path.exists(target_zip):
         os.remove(target_zip)
+    redis_save()

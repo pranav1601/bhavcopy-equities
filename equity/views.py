@@ -10,7 +10,6 @@ from .forms import searchForm
 # Create your views here.
 
 def index(request):
-    redis_save()
     val=''
     equity_dict={}
     search=searchForm()

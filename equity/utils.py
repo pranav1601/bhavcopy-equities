@@ -7,6 +7,7 @@ from datetime import datetime
 
 def redis_save():
     r=redis.StrictRedis(host="redis", port=6379, charset="utf-8", decode_responses=True)
+    r.flushall()
     df=bhavcopy()
     with r.pipeline() as pipe:
         for index,row in df.iterrows():
