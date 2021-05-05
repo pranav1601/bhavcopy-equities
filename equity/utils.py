@@ -3,6 +3,7 @@ import os
 from pathlib import Path
 import redis
 import glob
+from datetime import datetime
 
 def redis_save():
     r=redis.StrictRedis(host="redis", port=6379, charset="utf-8", decode_responses=True)
@@ -37,3 +38,13 @@ def bhavcopy():
         curr_bhavcopy=file_name
     df=pd.read_csv(os.path.join(download_path,curr_bhavcopy))
     return df
+
+def text_util():
+    curr_time=datetime.now()
+    today=datetime.today().weekday()
+    if(today==6 or today==5):
+        return("You are looking at Friday's data")
+    if(curr_time.hour<18):
+        return('If you want to view the Equity information for today, tune in after 6 pm')
+    return('')
+    
