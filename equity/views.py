@@ -17,6 +17,7 @@ def index(request):
     download_path = os.path.join(str(Path(__file__).resolve().parent), "downloads")
     filepath = os.path.join(download_path,'equities.csv')
     if request.method == 'POST':  
+        filtered_dict={}
         search_value = request.POST['search_equity']
         val=search_value.strip().upper()
         if(len(val)>0):

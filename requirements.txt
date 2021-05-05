@@ -1,0 +1,6 @@
+django==2.2.16
+celery
+django-celery-beat
+redis
+pandas
+requests

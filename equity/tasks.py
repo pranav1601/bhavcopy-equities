@@ -2,12 +2,10 @@ from __future__ import absolute_import, unicode_literals
 from celery import shared_task
 import os
 import glob
-from django.shortcuts import render
 import requests
 import zipfile
 from pathlib import Path
-from datetime import datetime, timedelta,date
-import mimetypes
+from datetime import datetime,date
 
 
 

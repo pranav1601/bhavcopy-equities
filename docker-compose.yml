@@ -1,0 +1,38 @@
+version: "3.8"
+
+services: 
+    django:
+        build: .
+        container_name: django
+        command: >
+            sh -c  "python3 manage.py migrate && ./manage.py runserver 0.0.0.0:8000"
+        volumes:
+            - .:/usr/src/app/
+        ports:
+            - "8000:8000"
+        environment: 
+            - DEBUG=1
+            - DJANGO_ALLOWED_HOSTS=0.0.0.0 localhost 127.0.0.1 [::1]
+            - CELERY_BROKER=redis://redis:6379/0
+            - CELERY_BACKEND=redis://redis:6379/0
+        depends_on: 
+            - redis
+    celery:
+        build: .
+        command: celery -A bhavcopy worker -B -l INFO
+        volumes: 
+            - .:/usr/src/app/
+        environment: 
+            - DEBUG=1
+            - DJANGO_ALLOWED_HOSTS=0.0.0.0 localhost 127.0.0.1 [::1]
+            - CELERY_BROKER=redis://redis:6379/0
+            - CELERY_BACKEND=redis://redis:6379/0
+        depends_on: 
+            - django
+            - redis
+    redis:
+        image: "redis:alpine"
+        command: redis-server
+        hostname: redis
+        ports:
+        - "6379:6379"

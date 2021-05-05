@@ -5,7 +5,7 @@ import redis
 import glob
 
 def redis_save():
-    r=redis.StrictRedis(host="localhost", port=6379, charset="utf-8", decode_responses=True)
+    r=redis.StrictRedis(host="redis", port=6379, charset="utf-8", decode_responses=True)
     df=bhavcopy()
     with r.pipeline() as pipe:
         for index,row in df.iterrows():
@@ -16,7 +16,7 @@ def redis_save():
     r.bgsave()
 
 def redis_search(val,filepath):
-    r=redis.StrictRedis(host="localhost", port=6379, charset="utf-8", decode_responses=True)
+    r=redis.StrictRedis(host="redis", port=6379, charset="utf-8", decode_responses=True)
     filtered_dict={}
     if os.path.exists(filepath):
         os.remove(filepath)
