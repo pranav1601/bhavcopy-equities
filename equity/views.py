@@ -16,15 +16,19 @@ def index(request):
     search=searchForm()
     download_path = os.path.join(str(Path(__file__).resolve().parent), "downloads")
     filepath = os.path.join(download_path,'equities.csv')
-    if request.method == 'POST':  
-        filtered_dict={}
+    found=False
+    if request.method == 'POST':
         search_value = request.POST['search_equity']
         val=search_value.strip().upper()
         if(len(val)>0):
-            filtered_dict=redis_search(val,filepath)
-        return render(request,'index.html',context={'text':filtered_dict,'form':search})
+            equity_dict=redis_search(val,filepath)
+        if(len(equity_dict)>0):
+            found=True
+        return render(request,'index.html',context={'text':equity_dict,'form':search,'found':found})
     equity_dict=redis_search('',filepath)
-    return render(request,'index.html',context={'text':equity_dict,'form':search})
+    if(len(equity_dict)>0):
+            found=True
+    return render(request,'index.html',context={'text':equity_dict,'form':search,'found':found})
 
 def download_file(request):
     download_path = os.path.join(str(Path(__file__).resolve().parent), "downloads")

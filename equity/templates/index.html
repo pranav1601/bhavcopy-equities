@@ -15,7 +15,7 @@
             <form method="POST" class="search-form" enctype="multipart/form-data">  
                 {% csrf_token %}
                 <div class="wrapper">
-                    {{ form}}
+                    {{form}}
                     <button type="submit" class="button">Search</button> 
                 </div>
             </form>
@@ -29,6 +29,7 @@
             </div>
         </div>
         <div class="wrapper">
+            {% if found%}
             <table>
                 <tr>
                     <th>Name</th>
@@ -47,6 +48,9 @@
                 </tr>
                 {% endfor %}    
             </table>
+            {% else %}
+            <h1 class="no-result">Sorry, no results!</2>
+            {% endif %}
         </div>
     </body>
 </html>
