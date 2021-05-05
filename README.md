@@ -1,7 +1,7 @@
 # Bhavcopy Equities
 
 Everyday BSE releases data of the performance of all equities of that day over [here](https://www.bseindia.com/markets/MarketInfo/BhavCopy.aspx).<br>
-This web application helps to view the performance of all the equities on that day by showin:
+This web application helps to view the performance of all the equities on that day by showing:
 * equity code
 * open
 * close
